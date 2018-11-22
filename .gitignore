@@ -2,3 +2,5 @@
 .metadata
 .recommenders
 RemoteSystemsTempFiles
+*/bin
+*.class
