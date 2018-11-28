@@ -10,7 +10,7 @@ public class TemperaturesensorApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(TemperaturesensorApplication.class, args);
-		new CoapServer().start();
+		//new CoapServer().start();
 		
 	}
 	
