@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableCircuitBreaker
-//@EnableEurekaClient
 public class CircuitbreakeriotApplication {
 
 	public static void main(String[] args) {
