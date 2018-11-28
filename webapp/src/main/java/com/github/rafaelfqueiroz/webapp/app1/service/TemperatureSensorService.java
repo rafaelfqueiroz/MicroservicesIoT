@@ -25,7 +25,20 @@ public class TemperatureSensorService {
 	 * Calculates de average of temperatures from the sensors. 
 	 */
 	public Double getAverageTemperature() {
-		List<Double> temperatures = new ArrayList<>(); 
+		List<Double> temperatures = new ArrayList<>();
+		for (String port : SensorRegistery.getPortOfSenros()) {
+			temperatures.add(
+						remoteService.getTemperatureFromSensor(port)
+					);
+		}
+		return temperatures.stream().mapToDouble(a -> a).average().getAsDouble();
+	}
+	
+	/**
+	 * Calculates de average of temperatures from the sensors in time. 
+	 */
+	public Double getAverageTemperatureInTime(Integer time) {
+		List<Double> temperatures = new ArrayList<>();
 		for (String port : SensorRegistery.getPortOfSenros()) {
 			temperatures.add(
 						remoteService.getTemperatureFromSensor(port)
