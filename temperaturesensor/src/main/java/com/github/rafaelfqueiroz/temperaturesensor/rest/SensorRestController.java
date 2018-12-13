@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.rafaelfqueiroz.temperaturesensor.data.Temperature;
-import com.github.rafaelfqueiroz.temperaturesensor.data.TemperatureSerie1;
+import com.github.rafaelfqueiroz.temperaturesensor.data.TemperatureSerie;
 
 @RestController
 @RequestMapping("/temperature")
 public class SensorRestController {
 	
 	@Autowired
-	private TemperatureSerie1 holder;
+	private TemperatureSerie holder;
 
 	@GetMapping("/now")
 	public Double getCurrentTemperature() {
