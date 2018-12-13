@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.rafaelfqueiroz.circuitbreakeriot.delegate.CBSensorDelegate;
+import com.github.rafaelfqueiroz.circuitbreakeriot.service.CircuitBreakerService;
 
 
 @RestController
@@ -16,20 +16,20 @@ import com.github.rafaelfqueiroz.circuitbreakeriot.delegate.CBSensorDelegate;
 public class CBTemperatureController {
 
 	@Autowired
-	private CBSensorDelegate delagete;
+	private CircuitBreakerService cbService;
 	
 	@Caching(cacheable= {
 			@Cacheable(value="normal", key="#sensorId", unless="#result == 0.0", cacheManager="normalCacheManager")
 	})
 	@GetMapping("/{sensorId}/now")
 	public Double checkTemperatureOfSensor(@PathVariable("sensorId") int sensorId) {
-		Double response = delagete.getTemperatureFromSensor(sensorId);
+		Double response = cbService.getTemperatureFromSensor(sensorId);
 		return response;
 	}
 	
 	@GetMapping("/{sensorId}/{time}")
 	public Double checkTemperatureOfSensorInTime(@PathVariable("sensorId") int sensorId, @PathVariable("time") Integer time) {
-		Double response = delagete.getTemperatureFromSensor(sensorId);
+		Double response = cbService.getTemperatureFromSensor(sensorId);
 		return response;
 	}
 	
