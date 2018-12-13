@@ -1,22 +1,23 @@
-package com.github.rafaelfqueiroz.temperaturesensor.data;
+package com.github.rafaelfqueiroz.temperaturesensor.data.serie1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import com.github.rafaelfqueiroz.temperaturesensor.data.Temperature;
+import com.github.rafaelfqueiroz.temperaturesensor.data.TemperatureSerie;
+
+@Component
 @Profile("sensor1")
-public class TemperatureSerie1 implements TemperatureSerie {
+public class TemperatureSerieImpl implements TemperatureSerie {
 	
 	private Temperature temperature;
 	
 	private List<Temperature> serie = new ArrayList<>();
 	
-	public TemperatureSerie1(@Value("${initialTemperature}") Double initialTemperature) {
-		this.temperature = new Temperature(initialTemperature);
+	public TemperatureSerieImpl() {
 		serie.add(new Temperature(25.0));
 		serie.add(new Temperature(30.0));
 		serie.add(new Temperature(32.0));
@@ -36,7 +37,7 @@ public class TemperatureSerie1 implements TemperatureSerie {
 	}
 	
 	public Double getLastTemperature() {
-		return temperature.getValue();
+		return serie.get(serie.size()-1).getValue();
 	}
 	
 	public void changeTemperature(Temperature temperature) {
