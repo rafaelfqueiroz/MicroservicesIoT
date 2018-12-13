@@ -22,14 +22,14 @@ public class CBTemperatureController {
 			@Cacheable(value="normal", key="#sensorId", unless="#result == 0.0", cacheManager="normalCacheManager")
 	})
 	@GetMapping("/{sensorId}/now")
-	public Double checkTemperatureOfSensor(@PathVariable("sensorId") int sensorId) {
-		Double response = cbService.getTemperatureFromSensor(sensorId);
+	public Double checkTemperatureOfSensor(@PathVariable("sensorId") String sensorId) {
+		Double response = cbService.executeGetRequest("http://localhost:"+ sensorId +"/temperature/now", Double.class, sensorId);
 		return response;
 	}
 	
 	@GetMapping("/{sensorId}/{time}")
-	public Double checkTemperatureOfSensorInTime(@PathVariable("sensorId") int sensorId, @PathVariable("time") Integer time) {
-		Double response = cbService.getTemperatureFromSensor(sensorId);
+	public Double checkTemperatureOfSensorInTime(@PathVariable("sensorId") String sensorId, @PathVariable("time") Integer time) {
+		Double response = cbService.executeGetRequest("http://localhost:"+ sensorId +"/temperature/"+time, Double.class, sensorId);
 		return response;
 	}
 	

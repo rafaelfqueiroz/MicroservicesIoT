@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class FallbackExceptionStrategy  extends AbstractFallbackStrategy {
 
 	@Override
-	public Double getDefaultFallback(Integer sensorId) throws Exception {
+	public Double getDefaultFallback(String sensorId) throws Exception {
 		super.getDefaultFallback(sensorId);
 		throw new Exception("Circuit Breaker has no valid value.");
 	}
