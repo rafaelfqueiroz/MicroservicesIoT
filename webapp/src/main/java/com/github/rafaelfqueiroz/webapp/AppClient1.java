@@ -1,5 +1,9 @@
 package com.github.rafaelfqueiroz.webapp;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +31,7 @@ public class AppClient1 implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		while (true) {
 			Double averageTemperature = service.getAverageTemperature();
-			System.out.println("Temperatura média = " + averageTemperature);
+			System.out.println("Average temperature = " + new BigDecimal(averageTemperature).setScale(2, RoundingMode.UP).doubleValue() + ". [" + new Date() + "]");
 			
 			Thread.sleep(interval);
 		}

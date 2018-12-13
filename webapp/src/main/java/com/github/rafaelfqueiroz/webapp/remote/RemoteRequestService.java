@@ -23,10 +23,15 @@ public class RemoteRequestService {
 	})
 	public Double getTemperatureFromSensor(String sensorPort) {
 		Double temperature = null;
-		if (requestGateway) {
-			temperature = restTemplate.getForObject("http://localhost:8081/sensor/temperature/"+sensorPort+"/now", Double.class);
-		} else {
-			temperature = restTemplate.getForObject("http://localhost:"+sensorPort+"/temperature/now", Double.class);
+		
+		try {
+			if (requestGateway) {
+				temperature = restTemplate.getForObject("http://localhost:8081/sensor/temperature/"+sensorPort+"/now", Double.class);
+			} else {
+				temperature = restTemplate.getForObject("http://localhost:"+sensorPort+"/temperature/now", Double.class);
+			}
+		} catch (Exception ex) {
+			temperature = 0.0;
 		}
 		
 		return temperature;
@@ -37,10 +42,14 @@ public class RemoteRequestService {
 	})
 	public Double getTemperatureFromSensor(String sensorPort, Integer time) {
 		Double temperature = null;
-		if (requestGateway) {
-			temperature = restTemplate.getForObject("http://localhost:8081/sensor/temperature/"+sensorPort+"/"+time, Double.class);
-		} else {
-			temperature = restTemplate.getForObject("http://localhost:"+sensorPort+"/temperature/"+time, Double.class);
+		try {
+			if (requestGateway) {
+				temperature = restTemplate.getForObject("http://localhost:8081/sensor/temperature/"+sensorPort+"/"+time, Double.class);
+			} else {
+				temperature = restTemplate.getForObject("http://localhost:"+sensorPort+"/temperature/"+time, Double.class);
+			}
+		} catch (Exception ex) {
+			temperature = 0.0;
 		}
 		
 		return temperature;

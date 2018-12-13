@@ -1,5 +1,6 @@
 package com.github.rafaelfqueiroz.webapp;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,7 +30,8 @@ public class AppClient2 implements ApplicationRunner {
 			List<Double> temperatureFromSensors = service.getTemperatureFromSensors();
 			int index = 1;
 			for (Double temperature : temperatureFromSensors) {
-				System.out.println("Temperatura Sensor [" + index +"] = "+ temperature);
+				Date timestamp = new Date();
+				System.out.println("Temperatura Sensor [" + index +"] = "+ temperature + ". [" + timestamp + "]");
 				index++;
 			}
 			System.out.println();
