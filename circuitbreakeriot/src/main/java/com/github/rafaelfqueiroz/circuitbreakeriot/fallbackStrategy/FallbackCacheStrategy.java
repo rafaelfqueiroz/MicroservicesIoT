@@ -7,9 +7,5 @@ import org.springframework.stereotype.Component;
 @Profile("cacheStrategy")
 public class FallbackCacheStrategy extends AbstractFallbackStrategy {
 	
-	@Override
-	public Double getDefaultFallback(String sensorId) throws Exception {
-		return super.getDefaultFallback(sensorId);
-	}
 
 }

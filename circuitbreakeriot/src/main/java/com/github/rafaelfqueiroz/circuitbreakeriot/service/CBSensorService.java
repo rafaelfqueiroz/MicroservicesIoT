@@ -21,10 +21,10 @@ public class CBSensorService implements CircuitBreakerService {
 	
 	@HystrixCommand(fallbackMethod="responseFallback")
 	public <T> T executeGetRequest(String url, Class<T> responseType, String cacheKey) {
-		System.out.println(String.format(" > [sensor %d - %s]: Starting remote call.", cacheKey, formatadorData.format(new Date())));
+		System.out.println(String.format(" > [sensor %s - %s]: Starting remote call.", cacheKey, formatadorData.format(new Date())));
 		//T response = restTemplate.getForObject("http://localhost:"+ sensorId +"/temperature/now", responseType);
 		T response = restTemplate.getForObject(url, responseType);
-		System.out.println(String.format(" > [sensor %d - %s]: Successful response (%1f).", cacheKey, formatadorData.format(new Date()), response));
+		System.out.println(String.format(" > [sensor %s - %s]: Successful response (%1f).", cacheKey, formatadorData.format(new Date()), response));
 		fallback.updateDefaultValue(cacheKey, response);
 		return response;
 	}
@@ -36,11 +36,11 @@ public class CBSensorService implements CircuitBreakerService {
 		return response;
 	}*/
 	
-	public Double responseFallback(String cacheKey) throws Exception {
-		System.out.println(String.format(" > [sensor %d - %s]: Failure sensor.", cacheKey, formatadorData.format(new Date())));
-		Double cachedTemperature = fallback.getDefaultFallback(cacheKey);
+	public <T> T responseFallback(String url, Class<T> responseType, String cacheKey) throws Exception {
+		System.out.println(String.format(" > [sensor %s - %s]: Failure sensor.", cacheKey, formatadorData.format(new Date())));
+		T cachedTemperature = fallback.getDefaultFallback(cacheKey);
 		
-		System.out.println(String.format(" >>> [sensor %d - %s]: Cached temperature (%1f)", cacheKey, formatadorData.format(new Date()), cachedTemperature));
+		System.out.println(String.format(" >>> [sensor %s - %s]: Cached temperature (%1f)", cacheKey, formatadorData.format(new Date()), cachedTemperature));
 		return cachedTemperature;
 	}
 	

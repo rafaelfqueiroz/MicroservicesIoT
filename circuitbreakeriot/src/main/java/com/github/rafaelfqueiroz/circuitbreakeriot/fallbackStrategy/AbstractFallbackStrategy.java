@@ -11,9 +11,9 @@ public abstract class AbstractFallbackStrategy implements FallbackStrategy<Strin
 	private SimpleDateFormat formatadorData = new SimpleDateFormat("HH:mm:ss");
 	
 	@Cacheable(value="fallback", key="#sensorId", condition = "#result != 0.0", cacheManager="failureCacheManager")
-	public Double getDefaultFallback(String sensorId) throws Exception {
-		System.out.println(String.format(" >>> [sensor %d - %s]: Non cache value.", sensorId, formatadorData.format(new Date())));
-		return 0.0;
+	public <T> T getDefaultFallback(String sensorId) throws Exception {
+		System.out.println(String.format(" >>> [sensor %s - %s]: Non cache value.", sensorId, formatadorData.format(new Date())));
+		return null;
 	}
 	
 	@CachePut(value="fallback", key="#sensorId", condition = "#result != 0.0", cacheManager="failureCacheManager")
