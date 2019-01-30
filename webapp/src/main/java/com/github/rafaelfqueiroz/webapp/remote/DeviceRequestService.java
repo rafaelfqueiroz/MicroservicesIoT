@@ -18,6 +18,8 @@ public class DeviceRequestService implements RemoteRequestService  {
 	private static final String ENABLE_CB = "false";
 	@Value("${curcuitBreaker.requestGateway}")
 	private Boolean requestGateway = false;
+	@Value("${host}")
+	private String host;
 	
 	@Autowired
 	private CircuitBreakerService cbService;
@@ -26,7 +28,7 @@ public class DeviceRequestService implements RemoteRequestService  {
 	public Double getTemperatureFromSensor(String sensorPort) {
 		Double temperature = null;
 		try {
-			temperature = cbService.executeGetRequest("http://localhost:"+sensorPort+"/temperature/now", Double.class, sensorPort);
+			temperature = cbService.executeGetRequest("http://"+ host + ":"+sensorPort+"/temperature/now", Double.class, sensorPort);
 		} catch (Exception ex) {
 			System.out.println("[" + formatadorData.format(new Date()) + "] " +  ex.getMessage());
 			temperature = 0.0;
@@ -37,7 +39,7 @@ public class DeviceRequestService implements RemoteRequestService  {
 	public Double getTemperatureFromSensor(String sensorPort, Integer time) {
 		Double temperature = null;
 		try {
-			temperature = cbService.executeGetRequest("http://localhost:"+sensorPort+"/temperature/"+time, Double.class, sensorPort); 
+			temperature = cbService.executeGetRequest("http://"+ host + ":"+sensorPort+"/temperature/"+time, Double.class, sensorPort); 
 		} catch (Exception ex) {
 			System.out.println("[" + formatadorData.format(new Date()) + "] " +  ex.getMessage());
 			temperature = 0.0;
@@ -48,8 +50,6 @@ public class DeviceRequestService implements RemoteRequestService  {
 	
 	public Double putSensorTemperature(String sensorPort, Double temperatureUpdate) {
 		Double newTemperature = null;
-		//	newTemperature = restTemplate.postForObject("http://localhost:8081/temperature/"+sensorPort, temperatureUpdate, Double.class);
-		//	newTemperature = restTemplate.postForObject("http://localhost:"+sensorPort+"/temperature", temperatureUpdate, Double.class);
 		return newTemperature;
 	}
 	

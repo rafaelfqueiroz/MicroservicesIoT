@@ -18,7 +18,7 @@ public class TemperatureSensorController {
 	private TemperatureSensorService service;
 	
 	@GetMapping("/average")
-	public String getAverageTemperature(Model model) {
+	public String getAverageTemperature(Model model) throws InterruptedException {
 		Double average = service.getAverageTemperature();
 		model.addAttribute("average", average);
 		return "average";
