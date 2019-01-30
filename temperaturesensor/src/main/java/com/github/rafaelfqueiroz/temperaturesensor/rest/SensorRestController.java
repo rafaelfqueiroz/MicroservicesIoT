@@ -19,12 +19,14 @@ public class SensorRestController {
 	private TemperatureSerie holder;
 
 	@GetMapping("/now")
-	public Double getCurrentTemperature() {
+	public Double getCurrentTemperature() throws InterruptedException {
+		Thread.sleep(10_000);
 		return holder.getLastTemperature();
 	}
 	
 	@GetMapping("/{time}")
-	public Double getTemperature(@PathVariable("time") Integer time) {
+	public Double getTemperature(@PathVariable("time") Integer time) throws InterruptedException {
+		Thread.sleep(10_000);
 		return holder.getTemperatureInTime(time);
 	}
 	
