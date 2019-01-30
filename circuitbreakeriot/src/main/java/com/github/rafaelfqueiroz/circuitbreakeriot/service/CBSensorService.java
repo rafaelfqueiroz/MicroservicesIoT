@@ -22,19 +22,11 @@ public class CBSensorService implements CircuitBreakerService {
 	@HystrixCommand(fallbackMethod="responseFallback")
 	public <T> T executeGetRequest(String url, Class<T> responseType, String cacheKey) {
 		System.out.println(String.format(" > [sensor %s - %s]: Starting remote call.", cacheKey, formatadorData.format(new Date())));
-		//T response = restTemplate.getForObject("http://localhost:"+ sensorId +"/temperature/now", responseType);
 		T response = restTemplate.getForObject(url, responseType);
 		System.out.println(String.format(" > [sensor %s - %s]: Successful response (%1f).", cacheKey, formatadorData.format(new Date()), response));
 		fallback.updateDefaultValue(cacheKey, response);
 		return response;
 	}
-	
-	/*@Cacheable(value="fallback", key="#sensorId", cacheManager="normalCacheManager")
-	@HystrixCommand(fallbackMethod="responseFallbackWithTime")
-	public Double getTemperatureFromSensor(String sensorId, Integer time) {
-		Double response = restTemplate.getForObject("http://localhost:"+ sensorId +"/temperature/"+time, Double.class);
-		return response;
-	}*/
 	
 	public <T> T responseFallback(String url, Class<T> responseType, String cacheKey) throws Exception {
 		System.out.println(String.format(" > [sensor %s - %s]: Failure sensor.", cacheKey, formatadorData.format(new Date())));
